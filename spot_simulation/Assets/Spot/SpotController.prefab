@@ -1,0 +1,132 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2315902705609230945
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2315902705609230949}
+  - component: {fileID: 2315902705609230946}
+  - component: {fileID: 2315902705609230947}
+  - component: {fileID: 2315902705609230944}
+  - component: {fileID: 6671186299446473774}
+  - component: {fileID: 6671186299446473778}
+  m_Layer: 0
+  m_Name: SpotController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2315902705609230949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315902705609230945}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 210.60428, y: 39.873413, z: 90.63613}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2315902705609230946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315902705609230945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3eceaf617ce052c42868fc69466cf65a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  joints:
+  - inputAxis: front left hip
+    robotPart: {fileID: 0}
+  - inputAxis: front left upper leg
+    robotPart: {fileID: 0}
+  - inputAxis: front left lower leg
+    robotPart: {fileID: 0}
+  - inputAxis: front right hip
+    robotPart: {fileID: 0}
+  - inputAxis: front right upper leg
+    robotPart: {fileID: 0}
+  - inputAxis: front right lower leg
+    robotPart: {fileID: 0}
+  - inputAxis: rear left hip
+    robotPart: {fileID: 0}
+  - inputAxis: rear left upper leg
+    robotPart: {fileID: 0}
+  - inputAxis: rear left lower leg
+    robotPart: {fileID: 0}
+  - inputAxis: rear right hip
+    robotPart: {fileID: 0}
+  - inputAxis: rear right upper leg
+    robotPart: {fileID: 0}
+  - inputAxis: rear right lower leg
+    robotPart: {fileID: 0}
+--- !u!114 &2315902705609230947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315902705609230945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f92b0034ae7b44bb135a73be741f63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jointPositions:
+  - 0
+--- !u!114 &2315902705609230944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315902705609230945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bd8cbdc8a35a114bb6146d09c722032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spot: {fileID: 0}
+--- !u!114 &6671186299446473774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315902705609230945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc07bfcbd6e1a5e438571abc5dde72c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: spot1
+  m_Spot: {fileID: 0}
+  name: []
+  pose: []
+  twist: []
+--- !u!114 &6671186299446473778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315902705609230945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee7d50f1e02eb94aa32b58c87c1fb46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  robotName: spot1
+  m_Spot: {fileID: 0}
