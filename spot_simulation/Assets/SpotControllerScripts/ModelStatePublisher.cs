@@ -8,6 +8,8 @@ using RosMessageTypes.Geometry;
 using Unity.Robotics.ROSTCPConnector.ROSGeometry;
 using FloatArray = RosMessageTypes.Std.Float64MultiArrayMsg; 
 
+// Publish the model states so the spot controller package
+// Knows there is a spot in the scene
 public class ModelStatePublisher : MonoBehaviour
 {
     [SerializeField]

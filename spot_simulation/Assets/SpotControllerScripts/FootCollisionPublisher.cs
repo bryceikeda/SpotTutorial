@@ -9,6 +9,7 @@ using ContactState = RosMessageTypes.Gazebo.ContactStateMsg;
 using Float = RosMessageTypes.Std.Float64Msg;
 
 
+// Send the foot collision data to ROS
 public class FootCollisionPublisher : MonoBehaviour
 {
     [SerializeField]
@@ -46,6 +47,7 @@ public class FootCollisionPublisher : MonoBehaviour
         for (int i = 0; i < FeetNames.Length; i++)
         {
             //m_Ros.RegisterPublisher<ContactsState>("/" + robotName + FeetNameTopics[i]);
+            m_Ros.RegisterPublisher<Float>("/" + robotName + FeetNameTopics[i] + "float");
             feetContacts = m_Spot.GetComponentsInChildren<FootCollisionSensor>();
         }
     }
@@ -56,13 +58,19 @@ public class FootCollisionPublisher : MonoBehaviour
         PublishContactStates(); 
     }
 
+    // Send the feet contacts as floats and convert it in ROS
+    // This is because there are some issues with the robotics hub
+    // Registering message types not in the standard library
     public void PublishContactStates()
-    {   
-        var frontLeftLowerLeg = new ContactsState();
-        var frontRightLowerLeg = new ContactsState();
-        var rearLeftLowerLeg = new ContactsState();
-        var rearRightLowerLeg = new ContactsState();
-
+    {
+        //var frontLeftLowerLeg = new ContactsState();
+        //var frontRightLowerLeg = new ContactsState();
+        //var rearLeftLowerLeg = new ContactsState();
+        //var rearRightLowerLeg = new ContactsState();
+        var frontLeftLowerLeg = new Float();
+        var frontRightLowerLeg = new Float();
+        var rearLeftLowerLeg = new Float();
+        var rearRightLowerLeg = new Float();
 
         // for each leg, get if it is touching the ground 
         for (int i = 0; i < feetContacts.Length; i++)
@@ -71,36 +79,44 @@ public class FootCollisionPublisher : MonoBehaviour
             {
                 if (feetContacts[i].colliding == true)
                 {
-                    rearRightLowerLeg.states = new ContactState[1];
+                    //rearRightLowerLeg.states = new ContactState[1];
+                    rearRightLowerLeg = new Float(1.0);
                 }
             }
             else if (feetContacts[i].gameObject.name == "rear_left_lower_leg")
             {
                 if (feetContacts[i].colliding == true)
                 {
-                    rearLeftLowerLeg.states = new ContactState[1];
+                    //rearLeftLowerLeg.states = new ContactState[1];
+                    rearLeftLowerLeg = new Float(1.0);
                 }
             }
             else if (feetContacts[i].gameObject.name == "front_left_lower_leg")
             {
                 if (feetContacts[i].colliding == true) 
                 {
-                    frontLeftLowerLeg.states = new ContactState[1];
+                    //frontLeftLowerLeg.states = new ContactState[1];
+                    frontLeftLowerLeg = new Float(1.0);
                 }
             }
             else if (feetContacts[i].gameObject.name == "front_right_lower_leg")
             {
                 if (feetContacts[i].colliding == true)
                 {
-                    frontRightLowerLeg.states = new ContactState[1];
+                    //frontRightLowerLeg.states = new ContactState[1];
+                    frontRightLowerLeg = new Float(1.0);
                 }
             }
         }
 
-       // m_Ros.Send("/" + robotName + FeetNameTopics[0], rearRightLowerLeg);
-      //  m_Ros.Send("/" + robotName + FeetNameTopics[1], rearLeftLowerLeg);
-      //  m_Ros.Send("/" + robotName + FeetNameTopics[2], frontLeftLowerLeg);
-     //   m_Ros.Send("/" + robotName + FeetNameTopics[3], frontRightLowerLeg);
+        // m_Ros.Send("/" + robotName + FeetNameTopics[0], rearRightLowerLeg);
+        //  m_Ros.Send("/" + robotName + FeetNameTopics[1], rearLeftLowerLeg);
+        //  m_Ros.Send("/" + robotName + FeetNameTopics[2], frontLeftLowerLeg);
+        //   m_Ros.Send("/" + robotName + FeetNameTopics[3], frontRightLowerLeg);
+        m_Ros.Send("/" + robotName + FeetNameTopics[0] + "float", rearRightLowerLeg);
+        m_Ros.Send("/" + robotName + FeetNameTopics[1] + "float", rearLeftLowerLeg);
+        m_Ros.Send("/" + robotName + FeetNameTopics[2] + "float", frontLeftLowerLeg);
+        m_Ros.Send("/" + robotName + FeetNameTopics[3] + "float", frontRightLowerLeg);
     }
 
 }

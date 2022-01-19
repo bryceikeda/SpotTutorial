@@ -6244,8 +6244,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedJoint: 
   selectedIndex: 0
-  stiffness: 1500
-  damping: 100
+  stiffness: 10000
+  damping: 1000
   forceLimit: 1000
 --- !u!114 &1754673236
 MonoBehaviour:
