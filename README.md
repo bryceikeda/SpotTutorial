@@ -92,7 +92,7 @@ roslaunch ros_tcp_endpoint endpoint.launch
 
 In your Unity environment, press play. You should see the topics show up on your terminal. 
 
-### Running the provided bag file
+### (OPTION 1) Running the provided bag file
 
 Open up a new terminal, source your workspace again and navigate to the bags folder and run the bag.
 
@@ -103,7 +103,7 @@ rosbag play joint_data.bag
 
 Now you should see the robot moving in Unity
 
-### Running the [spot_simulation](https://github.com/SoftServeSAG/spot_simulation/tree/spot_control) scripts
+### (OPTION 2) Running the [spot_simulation](https://github.com/SoftServeSAG/spot_simulation/tree/spot_control) scripts
 
 Open up and source four terminals in your Linux environment then run these launch files in order
 
