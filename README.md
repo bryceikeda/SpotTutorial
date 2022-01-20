@@ -130,3 +130,13 @@ Run the [teleop_legged_robot](https://github.com/SoftServeSAG/teleop_legged_robo
 ```sh
 roslaunch roslaunch teleop_legged_robots teleop.launch robot_name:="spot1"
 ```
+
+## Getting option 2 working better
+
+I have found a couple things help get option two working:
+
+1. If you run the unity_data_conversion launch script in ros and the SpotScene (Along with the other launch files talked about at the end of the video), the movement is better because I have foot collisions as well as model states publishing to the controller scripts. With the linear velocity set to 10 and the angular velocity set to 1.5, it moves more normally but still drifts to the left. 
+2. If you are using a laptop, and are plugged into a seperate monitor, unplug it. This can sometimes make the command behavior more stable. 
+
+
+
