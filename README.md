@@ -2,7 +2,7 @@
 
 Here are the steps to download this repository and test out the spot on your own computer. 
 
-## Insallation
+## Installation
 
 Unity 2020.3.21f1 or later is needed for the Unity project
 For ROS, I use Ubuntu 18.04 with Melodic installed
