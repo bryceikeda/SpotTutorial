@@ -6,8 +6,8 @@ Here are the steps to download this repository and test out the spot on your own
 
 Unity 2020.3.21f1 or later is needed for the Unity project
 For ROS, I use Ubuntu 18.04 with Melodic installed
-
 ### Install Unity 
+#### Install Unity 
 
 If you do not have Unity 2020.3.21f1 or later, add the latest 2020.3 release through [Unity Hub](https://unity3d.com/get-unity/download). Follow these links for [Ubuntu 18.04](https://releases.ubuntu.com/18.04/) and [ROS Melodic](http://wiki.ros.org/melodic/Installation/Ubuntu). 
 
