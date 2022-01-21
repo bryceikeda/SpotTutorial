@@ -80,7 +80,7 @@ Also, set your ROS_MASTER_URI and ROS_IP address to the same IP address or the m
 
 ```sh
 export ROS_MASTER_URI=http://(IP Address):11311
-export ROS_IP=IP Address
+export ROS_IP=(IP Address)
 ```
 
 ### Connecting ROS and Unity
