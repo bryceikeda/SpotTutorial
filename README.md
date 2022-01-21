@@ -128,7 +128,7 @@ roslaunch rs_base quadruped_controller.launch
 Run the [teleop_legged_robot](https://github.com/SoftServeSAG/teleop_legged_robots.git) launch file: 
 
 ```sh
-roslaunch roslaunch teleop_legged_robots teleop.launch robot_name:="spot1"
+roslaunch teleop_legged_robots teleop.launch robot_name:="spot1"
 ```
 
 ## Getting option 2 working better
