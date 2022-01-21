@@ -39,7 +39,7 @@ public class ModelStatePublisher : MonoBehaviour
         // Get ROS connection static instance
         m_Ros = connection.GetComponent<ROSConnection>();
         m_Spot = GameObject.Find(robotName);
-        //m_Ros.RegisterPublisher<ModelStates>(modelStatesTopic);
+        m_Ros.RegisterPublisher<ModelStates>(modelStatesTopic);
 
         name = new string[1];
         pose = new PoseMsg[1];
