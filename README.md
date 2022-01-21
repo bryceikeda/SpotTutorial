@@ -76,6 +76,13 @@ In your ROS environment, navigate to the params.yaml file and put your same IP a
 gedit src/ROS-TCP-Endpoint/config/params.yaml
 ```
 
+Also, set your ROS_MASTER_URI and ROS_IP address to the same IP address or the messages won't send between ROS and Unity
+
+```sh
+export ROS_MASTER_URI=http://(IP Address):11311
+export ROS_IP=IP Address
+```
+
 ### Connecting ROS and Unity
 
 In your ROS environment, source your workspace
