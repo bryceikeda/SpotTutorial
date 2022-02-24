@@ -1,4 +1,0 @@
-<launch>
-    <rosparam file="$(find server)/config/params.yaml" command="load"/>
-    <node pkg="server" name="server" type="server_endpoint.py" args="--wait" output="screen" respawn="true"/>
-</launch>
