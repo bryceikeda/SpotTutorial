@@ -4,119 +4,92 @@ using UnityEngine;
 using RosMessageTypes.Geometry;
 using Unity.Robotics.ROSTCPConnector;
 using RosMessageTypes.Std;
-using ContactsState = RosMessageTypes.Gazebo.ContactsStateMsg;
-using ContactState = RosMessageTypes.Gazebo.ContactStateMsg;
-using Float = RosMessageTypes.Std.Float64Msg;
+using RosMessageTypes.Gazebo;
 
 
-// Send the foot collision data to ROS
+// Send the foot collision data to ROS for the spot_controller
 public class FootCollisionPublisher : MonoBehaviour
 {
-    [SerializeField]
-    private string robotName = "spot1";
+    // Name of each Unity Spot foot 
+    public static readonly string[] FeetNames =
+    {   "base_link/front_rail/front_left_hip/front_left_upper_leg/front_left_lower_leg",
+        "base_link/front_rail/front_right_hip/front_right_upper_leg/front_right_lower_leg",
+        "base_link/rear_rail/rear_left_hip/rear_left_upper_leg/rear_left_lower_leg",
+        "base_link/rear_rail/rear_right_hip/rear_right_upper_leg/rear_right_lower_leg"
+    };
+    
+    // Names of each foot topic
+    public static readonly string[] rosFeetNameTopics =
+    {   "front_left_lower_leg_contact",
+        "front_right_lower_leg_contact",
+        "rear_left_lower_leg_contact",
+        "rear_right_lower_leg_contact" 
+    };
 
     [SerializeField]
     GameObject m_Spot;
     // ROS Connector
-    public ROSConnection m_Ros;
+    ROSConnection m_Ros;
 
-    public static readonly string[] FeetNames =
-        { "rear_right_lower_leg", "rear_left_lower_leg", "front_left_lower_leg", "front_right_lower_leg" };
-    
-    public static readonly string[] FeetNameTopics =
-        { "/rear_right_lower_leg_contact", "/rear_left_lower_leg_contact", "/front_left_lower_leg_contact", "/front_right_lower_leg_contact" };
+    FootCollisionSensor[] m_FootCollisionSensors;
 
-
-    FootCollisionSensor[] feetContacts;
     const int k_NumFeetContacts = 4;
+    string m_RobotName = "spot1";
+
+    float updateRate = .1f;
+    float counter;
 
     // Start is called before the first frame update
     void Start()
     {
         // Get ROS connection static instance
-        m_Ros = ROSConnection.instance;
-        m_Spot = GameObject.Find(robotName);
+        m_Ros = ROSConnection.GetOrCreateInstance();
 
-        feetContacts = new FootCollisionSensor[k_NumFeetContacts];
+        counter = Time.fixedTime + updateRate;
 
-        if (m_Spot == null)
+        // Get each food FootCollisionSensor script and register the publisher
+        m_FootCollisionSensors = new FootCollisionSensor[k_NumFeetContacts];
+        for (int i = 0; i < k_NumFeetContacts; i++)
         {
-            Debug.LogError("No robot named" + robotName + "found.");
+            m_Ros.RegisterPublisher<ContactsStateMsg>(m_RobotName + "/" + rosFeetNameTopics[i]);
+            m_FootCollisionSensors[i] = m_Spot.transform.Find(FeetNames[i]).GetComponent<FootCollisionSensor>();
         }
 
-        for (int i = 0; i < FeetNames.Length; i++)
-        {
-            //m_Ros.RegisterPublisher<ContactsState>("/" + robotName + FeetNameTopics[i]);
-            m_Ros.RegisterPublisher<Float>("/" + robotName + FeetNameTopics[i] + "float");
-            feetContacts = m_Spot.GetComponentsInChildren<FootCollisionSensor>();
-        }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        PublishContactStates(); 
+        if (Time.fixedTime >= counter)
+        {
+            PublishContactStates();
+            counter = Time.fixedTime + updateRate;
+        }
     }
 
-    // Send the feet contacts as floats and convert it in ROS
-    // This is because there are some issues with the robotics hub
-    // Registering message types not in the standard library
+    // Send the feet contacts to ROS
     public void PublishContactStates()
     {
-        //var frontLeftLowerLeg = new ContactsState();
-        //var frontRightLowerLeg = new ContactsState();
-        //var rearLeftLowerLeg = new ContactsState();
-        //var rearRightLowerLeg = new ContactsState();
-        var frontLeftLowerLeg = new Float();
-        var frontRightLowerLeg = new Float();
-        var rearLeftLowerLeg = new Float();
-        var rearRightLowerLeg = new Float();
-
-        // for each leg, get if it is touching the ground 
-        for (int i = 0; i < feetContacts.Length; i++)
+        for (int i = 0; i < k_NumFeetContacts; i++)
         {
-            if (feetContacts[i].gameObject.name == "rear_right_lower_leg")
+            if (m_FootCollisionSensors[i].colliding)
             {
-                if (feetContacts[i].colliding == true)
-                {
-                    //rearRightLowerLeg.states = new ContactState[1];
-                    rearRightLowerLeg = new Float(1.0);
-                }
+                // Create the spot footcontact message, there's
+                // probably a correct way to do this
+                var header = new HeaderMsg();
+
+                var contact_state = new ContactStateMsg[1];
+                contact_state[0] = new ContactStateMsg();
+
+                var contacts_state = new ContactsStateMsg(header, contact_state);
+
+                m_Ros.Publish(m_RobotName + "/" + rosFeetNameTopics[i], contacts_state);
             }
-            else if (feetContacts[i].gameObject.name == "rear_left_lower_leg")
+            else
             {
-                if (feetContacts[i].colliding == true)
-                {
-                    //rearLeftLowerLeg.states = new ContactState[1];
-                    rearLeftLowerLeg = new Float(1.0);
-                }
-            }
-            else if (feetContacts[i].gameObject.name == "front_left_lower_leg")
-            {
-                if (feetContacts[i].colliding == true) 
-                {
-                    //frontLeftLowerLeg.states = new ContactState[1];
-                    frontLeftLowerLeg = new Float(1.0);
-                }
-            }
-            else if (feetContacts[i].gameObject.name == "front_right_lower_leg")
-            {
-                if (feetContacts[i].colliding == true)
-                {
-                    //frontRightLowerLeg.states = new ContactState[1];
-                    frontRightLowerLeg = new Float(1.0);
-                }
+                m_Ros.Publish(m_RobotName + "/" + rosFeetNameTopics[i], new ContactsStateMsg());
             }
         }
-
-        // m_Ros.Send("/" + robotName + FeetNameTopics[0], rearRightLowerLeg);
-        //  m_Ros.Send("/" + robotName + FeetNameTopics[1], rearLeftLowerLeg);
-        //  m_Ros.Send("/" + robotName + FeetNameTopics[2], frontLeftLowerLeg);
-        //   m_Ros.Send("/" + robotName + FeetNameTopics[3], frontRightLowerLeg);
-        m_Ros.Send("/" + robotName + FeetNameTopics[0] + "float", rearRightLowerLeg);
-        m_Ros.Send("/" + robotName + FeetNameTopics[1] + "float", rearLeftLowerLeg);
-        m_Ros.Send("/" + robotName + FeetNameTopics[2] + "float", frontLeftLowerLeg);
-        m_Ros.Send("/" + robotName + FeetNameTopics[3] + "float", frontRightLowerLeg);
+        
     }
 
 }

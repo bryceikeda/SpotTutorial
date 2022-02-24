@@ -2,25 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Robotics.ROSTCPConnector;
-using Float = RosMessageTypes.Std.Float64Msg;
+using RosMessageTypes.BuiltinInterfaces;
 
 public class ClockPublisher : MonoBehaviour
 {
     // ROS Connector
     ROSConnection m_Ros;
 
+    // Variables required for ROS communication
+    public string rosClockTopicName = "clock";
+
     // Start is called before the first frame update
     void Start()
     {
         // Get ROS connection static instance
-        m_Ros = ROSConnection.instance;
-        m_Ros.RegisterPublisher<Float>("/unity/time");
+        m_Ros = ROSConnection.GetOrCreateInstance();
+        m_Ros.RegisterPublisher<TimeMsg>(rosClockTopicName);
     }
 
-    // Update is called once per frame
-    void Update()
+    // Publish simulated clock
+    void FixedUpdate()
     {
-        Float unityTime= new Float(Time.time);
-        m_Ros.Send("/unity/time", unityTime); 
+        var clock = new TimeMsg
+        {
+            sec = (uint)Time.realtimeSinceStartup,
+            nanosec = 0
+        };
+        m_Ros.Publish(rosClockTopicName, clock);
     }
 }
