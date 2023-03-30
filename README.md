@@ -25,7 +25,7 @@ In your Linux environment, make a new directory and call it whatever you like. T
 ```sh
 mkdir spot_ws
 cd spot_ws/
-mkdri src
+mkdir src
 cd src
 ```
 
