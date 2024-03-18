@@ -105,12 +105,6 @@ Start a controller:
 roslaunch rs_inverse inverse.launch robot_name:="spot1"
 ```
 
-Run the data converter (Due to some issues with Unity Robotics Hub that they are fixing, you need to run this script for better robot behavior):
-
-```sh
-roslaunch unity_data_conversion unity_data_conversion.launch
-```
-
 Run the quadruped controller to use Twist() abd Pose() messages:
 
 ```sh
